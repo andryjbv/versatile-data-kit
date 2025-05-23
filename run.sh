@@ -6,18 +6,17 @@ set -e
 # Replace this with your command to run all tests
 run_all_tests() {
   echo "Running all tests..."
-  # Example: pytest tests/
-  # TODO: Replace with your command to run all tests
-  # Your command here
+  # Execute the entire test suite with verbose output.
+  # Any failures should not stop the script because of 'set -e'.
+  pytest -vv app || true
 }
 
 # Replace this with your command to run specific test files
 run_selected_tests() {
   local test_files=("$@")
   echo "Running selected tests: ${test_files[@]}"
-  # Example: pytest "${test_files[@]}"
-  # TODO: Replace with your command to run specific test files
-  # <Your command here>
+  # Run only the specified test files with verbose output.
+  pytest -vv "${test_files[@]}" || true
 }
 # --- END CONFIGURATION SECTION ---
 
