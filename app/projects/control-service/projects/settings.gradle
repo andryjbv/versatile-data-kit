@@ -1,0 +1,32 @@
+pluginManagement {
+   plugins {
+      id 'org.springframework.boot' version '2.7.18'
+      id 'io.spring.dependency-management' version '1.1.4'
+      id 'com.palantir.docker' version '0.36.0'
+      // https://projectlombok.org/setup/gradle
+      id 'io.freefair.lombok' version '8.6'
+      id 'com.palantir.git-version' version '3.0.0'
+      id 'org.unbroken-dome.test-sets' version '4.1.0'
+      // https://gitlab.com/barfuin/gradle-jacoco-log/-/blob/master/README.md
+      id 'org.barfuin.gradle.jacocolog' version '3.1.0'
+      id 'com.github.jk1.dependency-license-report' version '2.6'
+   }
+
+   repositories {
+
+// See maven.gradle about why the following is commented.
+//      maven {
+//         url 'http://build-squid.eng.vmware.com/nexus/content/groups/repo'
+//      }
+
+      mavenCentral()
+      maven {
+         url 'https://plugins.gradle.org/m2/'
+      }
+   }
+}
+
+rootProject.name = 'projects'
+
+include 'base'
+include 'pipelines_control_service'

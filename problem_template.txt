@@ -1,0 +1,141 @@
+# Development Environment Setup and Test Analysis
+
+## Background
+You are given a codebase for [PROJECT_NAME] located at [REPO_URL]. Your task is to set up a development environment using Docker, set up build scripts and run scripts to build the repo and run tests, and write a parsing script to analyze the test results.
+
+⚠️ IMPORTANT: You should NEVER modify the source code of the project. Your task is to create a development-focused Dockerfile along with other scripts that facilitates quick testing of specific code changes.
+
+You will be given:
+- A `/workspace` directory containing the project files, you are already provided with some template files that you only need to fill in specific parts:
+   - `/workspace/app`: The project files, you need to clone to this directory
+   - `/workspace/Dockerfile`: The Dockerfile that you need to implement to configure the build and run environment
+   - `/workspace/build.sh`: The build script that you need to implement to build the repo
+   - `/workspace/run.sh`: The run script that you need to implement to run tests
+   - `/workspace/parsing.py`: The test result parser that you need to implement
+
+## Tasks
+
+### 1. Environment Setup (Local Analysis)
+- Clone the repository to your `/workspace/app` directory for initial examination
+- IMPORTANT: Before implementing anything, thoroughly analyze the codebase:
+  - Read ALL README files and documentation carefully
+  - Study build configuration files to understand build requirements
+  - Examine test configuration files to understand test setup and requirements:
+    - Identify all available test suites and test files
+    - Check for test categories (unit, integration, end2end, etc.)
+    - Note test file naming patterns
+    - Look for test configuration options that enable selective test execution
+    - Find commands to run individual test files or test cases
+    - Check for test output verbosity settings
+  - Check for any custom scripts or tools
+  - Look for specific version requirements or constraints
+  - Review existing Docker configurations if any
+  - Analyze GitHub Actions workflows in `.github/workflows/`:
+    - Check what base images are used in CI/CD
+    - Review environment setup steps
+    - Note package installation commands
+    - Identify build and test commands
+    - Look for environment variables
+    - Study dependency caching strategies
+  - Check other CI/CD configurations for environment setup hints
+  - Pay special attention to:
+    - Non-standard configurations or custom build steps
+    - Environment-specific requirements
+    - Test framework customizations
+    - Special dependencies or system requirements
+    - Platform-specific code or requirements
+- Document key findings that will impact your Dockerfile implementation
+- Remember: Your role is to adapt the Dockerfile to the project, not modify the project to fit your Dockerfile
+- DO NOT make assumptions about:
+  - Build process
+  - Test execution
+  - Dependencies
+  - Environment requirements
+  - Framework configurations
+- DO NOT attempt to:
+  - Modify any source code
+  - Change build configurations
+  - Alter test frameworks
+  - Update dependencies
+  - Change any existing scripts
+
+### 2. Dockerfile Implementation
+Create a single Dockerfile that adapts to the existing codebase:
+
+- Base image selection based on actual project requirements found in the codebase
+  - Consider the project's primary programming language
+  - Consider required system dependencies
+  - Consider security implications
+- Git installation and repository cloning to `/app` directory
+- System package installation as specified in project documentation
+- Build tools setup 
+- Language-specific package managers
+
+The Dockerfile should:
+- Be simple and straightforward (single-stage build)
+- Clone the repository to `/app` inside the container
+
+### 3. Build Script Implementation
+Implement the build script in `/workspace/build.sh` to configure and build the repo.
+
+- Project dependency installation
+- Environment variable configuration
+- Build process
+
+The build script should:
+- Respect any specific requirements found in the project's configuration
+- Account for custom build scripts discovered during analysis
+- Work with the existing codebase without requiring any modifications
+- Handle any special cases discovered during analysis
+
+### 4. Run Script Implementation
+Implement the run script in `/workspace/run.sh` to configure and run tests.
+- Test execution setup:
+  - Configure test framework for detailed output (e.g., pytest -v)
+  - Enable individual test case status reporting
+  - Set up test discovery for quick feedback
+  - Include failure details and stack traces
+
+The run script should:
+- Respect any specific requirements found in the project's configuration
+- Account for custom test scripts discovered during analysis
+- Work with the existing codebase without requiring any modifications
+- Clear test output with individual case status
+
+
+### 5. Test Results Parser
+`docker build` and `docker -v $(pwd):/workspace run $IMAGE_NAME /workspace/run.sh` to execute tests and check the outputs. Based on the output, implement the parsing logic in `/workspace/parsing.py` to:
+- Process the test execution output
+- Identify test names and their results
+- Categorize results as PASSED, FAILED, SKIPPED, or ERROR
+- Generate a structured JSON output
+- Process detailed test execution output:
+  - Capture individual test case results
+  - Track error messages and stack traces
+Note: Only implement the parsing function and leave the rest of the file as is.
+Verify the parser implementation by running the container and check the generated `/workspace/test_results.json` file.
+
+## Evaluation Criteria
+You will be evaluated based on the following criteria:
+- Thoroughness in analyzing and understanding the codebase
+- Attention to project-specific requirements and configurations
+- Thinking process and reasoning when studying the project
+- Understanding of project structure and requirements
+- Dockerfile implementation quality and best practices
+- Build and run scripts implementation quality and best practices
+- Successful build and test execution
+- Accuracy of test result parsing
+- Code quality and documentation
+- Error handling
+
+**Important Note:**
+- The codebase is considered read-only - DO NOT modify any existing files
+- Your solution should be entirely contained within the Dockerfile, build.sh, run.sh and parsing.py
+- If you find any challenges in the codebase, solve them through Docker configuration and scripts
+- DO NOT start implementation before thoroughly reading and understanding the codebase
+- Pay special attention to non-standard configurations and custom requirements
+- Your implementation must reflect the actual requirements found in the code, not assumptions
+- When in doubt, look deeper into the codebase for answers
+- Think carefully before implementing anything. You get extra points for thoroughly exploring the project and understanding its structure.
+- You are already given some template files to fill in under `/workspace`. Check the `/workspace/Dockerfile` structure and requirements before editing.
+- Before and after editing or running a file, open and check its contents to make sure it is correct.

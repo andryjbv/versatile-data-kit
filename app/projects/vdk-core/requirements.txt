@@ -1,0 +1,25 @@
+# Python dependencies used during build and tests.
+# For dependencies used during installation make sure to set them in setup.cfg (install_requires section)
+
+-e ../vdk-plugins/vdk-test-utils
+black
+duckdb
+mypy
+pandas
+
+# Dependencies license report:
+pip-licenses
+
+# used for git hooks
+pre-commit
+pydocstyle
+
+# testing dependencies
+pytest
+pytest-cov
+pytest-randomly
+pytest-sugar
+reorder-python-imports
+smtpdfix
+vdk-duckdb
+vdk-sqlite

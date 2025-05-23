@@ -1,0 +1,121 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.vdk_core_changes: &vdk_core_locations
+  - "projects/vdk-core/*"
+  - "projects/vdk-core/cicd/**/*"
+  - "projects/vdk-core/src/**/*"
+  - "projects/vdk-core/tests/**/*"
+
+
+.vdk-core-build:
+  stage: build
+  before_script:
+    - cd projects/vdk-core/
+  script:
+    - ./cicd/build.sh
+  retry: !reference [.retry, retry_options]
+  coverage: /^TOTAL\s+\d+\s+\d+\s+(\d+\%)$/
+  only:
+    refs:
+      - external_pull_requests
+      - main
+    changes: *vdk_core_locations
+  artifacts:
+    when: always
+    paths:
+      - ./projects/vdk-core/tests.xml
+    expire_in: 1 week
+    reports:
+      junit: ./projects/vdk-core/tests.xml
+
+vdk-core-build_with_py37:
+  image: "python:3.7"
+  extends: .vdk-core-build
+
+vdk-core-build_with_py38:
+  image: "python:3.8"
+  extends: .vdk-core-build
+
+vdk-core-build_with_py39:
+  image: "python:3.9"
+  extends: .vdk-core-build
+
+# There seem to be an issue with python 3.10.6 ... TODO: add github issue
+vdk-core-build_with_py310:
+  image: "python:3.10.5"
+  extends: .vdk-core-build
+
+vdk-core-build_with_py311:
+    image: "python:3.11"
+    extends: .vdk-core-build
+
+vdk-core-build_with_py312:
+  image: "python:3.12"
+  extends: .vdk-core-build
+
+.vdk-core-simple_func_test:
+  services:
+    - name: trinodb/trino
+  stage: build
+  before_script:
+    - cd projects/vdk-core/
+  script:
+    - export VDK_TRINO_DOCKER_START=no
+    - ./cicd/simple-functional-test.sh
+  retry: !reference [.retry, retry_options]
+  only:
+    refs:
+      - external_pull_requests
+      - main
+    changes:
+      - "projects/vdk-core/**/*"
+  artifacts:
+    when: always
+    paths:
+      - ./projects/vdk-core/tests.xml
+    expire_in: 1 week
+    reports:
+      junit: ./projects/vdk-core/tests.xml
+
+vdk-core-simple_func_test_with_py37:
+  image: "python:3.7"
+  extends: .vdk-core-simple_func_test
+
+vdk-core-simple_func_test_with_py38:
+  image: "python:3.8"
+  extends: .vdk-core-simple_func_test
+
+vdk-core-simple_func_test_with_py39:
+  image: "python:3.9"
+  extends: .vdk-core-simple_func_test
+
+vdk-core-simple_func_test_with_py310:
+  image: "python:3.10"
+  extends: .vdk-core-simple_func_test
+
+vdk-core-simple_func_test_with_py311:
+  image: "python:3.11"
+  extends: .vdk-core-simple_func_test
+
+vdk-core-simple_func_test_with_py312:
+  image: "python:3.12"
+  extends: .vdk-core-simple_func_test
+
+vdk-core-release:
+  stage: release
+  before_script:
+    - cd projects/vdk-core/
+  script:
+    - pip install -U pip setuptools wheel twine
+    - export VDK_RELEASE_OVERRIDE_PATCH_VERSION=${CI_PIPELINE_ID}
+    - ./cicd/set-patch-version.sh "$VDK_RELEASE_OVERRIDE_PATCH_VERSION"
+    - ./cicd/release-vdk-core.sh
+  retry: !reference [.retry, retry_options]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes: *vdk_core_locations

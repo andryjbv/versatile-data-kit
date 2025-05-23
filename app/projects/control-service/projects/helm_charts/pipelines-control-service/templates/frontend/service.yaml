@@ -1,0 +1,24 @@
+{{- /*
+  Copyright 2023-2025 Broadcom
+  SPDX-License-Identifier: Apache-2.0
+ */}}
+
+{{- if .Values.operationsUi.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+   name: {{ .Release.Name }}-ui
+spec:
+{{- if .Values.ingress.enabled }}
+   type: ClusterIP
+{{- else }}
+   type: LoadBalancer
+{{- end }}
+   ports:
+      -  port: 80
+         targetPort: 8091
+   selector:
+      app: {{ .Release.Name }}-ui
+
+{{- end }}

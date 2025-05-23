@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-greenplum:
+  variables:
+    PLUGIN_NAME: vdk-greenplum
+  extends: .build-plugin-dind
+
+#build-py37-vdk-greenplum:
+#  extends: .build-vdk-greenplum
+#  image: "python:3.7"
+#
+#build-py312-vdk-greenplum:
+#  extends: .build-vdk-greenplum
+#  image: "python:3.12"
+
+release-vdk-greenplum:
+  variables:
+    PLUGIN_NAME: vdk-greenplum
+  extends: .release-plugin

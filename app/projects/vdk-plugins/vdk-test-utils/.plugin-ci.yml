@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-test-utils:
+  variables:
+    PLUGIN_NAME: vdk-test-utils
+  extends: .build-plugin
+
+build-py37-vdk-test-utils:
+  extends: .build-vdk-test-utils
+  image: "python:3.7"
+
+build-py312-vdk-test-utils:
+  extends: .build-vdk-test-utils
+  image: "python:3.12"
+
+release-vdk-test-utils:
+  variables:
+    PLUGIN_NAME: vdk-test-utils
+  extends: .release-plugin

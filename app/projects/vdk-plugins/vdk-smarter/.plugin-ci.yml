@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-smarter:
+  variables:
+    PLUGIN_NAME: vdk-smarter
+  extends: .build-plugin
+
+build-py37-vdk-smarter:
+  extends: .build-vdk-smarter
+  image: "python:3.7"
+
+build-py312-vdk-smarter:
+  extends: .build-vdk-smarter
+  image: "python:3.12"
+
+release-vdk-smarter:
+  variables:
+    PLUGIN_NAME: vdk-smarter
+  extends: .release-plugin

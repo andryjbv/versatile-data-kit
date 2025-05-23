@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-lineage-model:
+  variables:
+    PLUGIN_NAME: vdk-lineage-model
+  extends: .build-plugin
+
+build-py37-vdk-lineage-model:
+  extends: .build-vdk-lineage-model
+  image: "python:3.7"
+
+build-py312-vdk-lineage-model:
+  extends: .build-vdk-lineage-model
+  image: "python:3.12"
+
+release-vdk-lineage-model:
+  variables:
+    PLUGIN_NAME: vdk-lineage-model
+  extends: .release-plugin

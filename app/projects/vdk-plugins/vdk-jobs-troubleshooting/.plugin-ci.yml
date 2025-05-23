@@ -1,0 +1,28 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-jobs-troubleshooting:
+  variables:
+    PLUGIN_NAME: vdk-jobs-troubleshooting
+  extends: .build-plugin
+
+build-py37-vdk-jobs-troubleshooting:
+  extends: .build-vdk-jobs-troubleshooting
+  image: "python:3.7"
+
+build-py312-vdk-jobs-troubleshooting:
+  extends: .build-vdk-jobs-troubleshooting
+  image: "python:3.12"
+
+build-vdk-jobs-troubleshooting-on-vdk-core-release:
+ variables:
+   PLUGIN_NAME: vdk-jobs-troubleshooting
+ extends: .build-plugin-on-vdk-core-release
+ image: "python:3.9"
+
+release-vdk-jobs-troubleshooting:
+ variables:
+   PLUGIN_NAME: vdk-jobs-troubleshooting
+ extends: .release-plugin

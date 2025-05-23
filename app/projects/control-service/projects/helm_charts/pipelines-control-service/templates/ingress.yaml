@@ -1,0 +1,41 @@
+{{- /*
+  Copyright 2023-2025 Broadcom
+  SPDX-License-Identifier: Apache-2.0
+ */}}
+
+{{- if .Values.ingress.enabled -}}
+kind: Ingress
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+  annotations: {{- toYaml .Values.ingress.annotations | nindent 4 }}
+apiVersion: networking.k8s.io/v1
+spec:
+{{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+{{- end }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .name }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ default "/" .path | quote }}
+            pathType: "ImplementationSpecific"
+            backend:
+              service:
+                name: {{ tpl .serviceName $ }}
+                port:
+                  number: {{ .servicePort }}
+          {{- end }}
+    {{- end }}
+  tls:
+    {{- range .Values.ingress.hosts }}
+    {{- if .tls }}
+      - hosts:
+          - {{ .name }}
+        secretName: {{ .tlsSecretName }}
+    {{- end }}
+    {{- end }}
+  {{- end -}}

@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-postgres:
+  variables:
+    PLUGIN_NAME: vdk-postgres
+  extends: .build-plugin-dind
+
+#build-py37-vdk-postgres:
+#  extends: .build-vdk-postgres
+#  image: "python:3.7"
+#
+#build-py312-vdk-postgres:
+#  extends: .build-vdk-postgres
+#  image: "python:3.12"
+
+release-vdk-postgres:
+  variables:
+    PLUGIN_NAME: vdk-postgres
+  extends: .release-plugin

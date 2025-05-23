@@ -1,0 +1,159 @@
+scalar DateTime
+
+schema {
+    query: Query
+}
+
+type Query {
+    jobs(pageNumber: Int = 0, pageSize: Int = 20, filter: [Predicate], search: String): DataJobPage
+    executions(pageNumber: Int, pageSize: Int, filter: DataJobExecutionFilter, order: DataJobExecutionOrder): DataJobExecutionResponse
+}
+
+input Predicate {
+    property: String,
+    pattern: String,
+    sort: Direction
+}
+
+enum Direction {
+    ASC,
+    DESC
+}
+
+input DataJobExecutionFilter {
+    startTimeGte: DateTime,
+    endTimeGte: DateTime,
+    statusIn: [DataJobExecutionStatus],
+    jobNameIn: [String],
+    teamNameIn: [String],
+    startTimeLte: DateTime,
+    endTimeLte: DateTime
+}
+
+input DataJobExecutionOrder {
+    property: String,
+    direction: Direction
+}
+
+# TODO use auto-generation [TAUR-1376]
+type DataJobPage {
+    content: [DataJob]
+    totalPages: Int
+    totalItems: Int
+}
+
+type DataJobExecutionResponse {
+    content: [DataJobExecution]
+    totalPages: Int
+    totalItems: Int
+}
+
+type DataJob {
+    jobName: String
+    config: DataJobConfig
+    deployments: [DataJobDeployment]
+}
+
+type DataJobContacts {
+    notifiedOnJobFailureUserError: [String]
+    notifiedOnJobFailurePlatformError: [String]
+    notifiedOnJobSuccess: [String]
+    notifiedOnJobDeploy: [String]
+}
+
+type DataJobResources {
+    cpuLimit: Float
+    cpuRequest: Float
+    empheralStorageLimit: Int
+    empheralSorageRequest: Int
+    memoryLimit: Int
+    memoryRequest: Int
+    netBandwitdthLimit: Int
+}
+
+type DataJobExecutionDeployment {
+  id: String
+  enabled: Boolean
+  contacts: DataJobContacts
+  jobVersion: String
+  jobPythonVersion: String
+  deployedDate: String
+  deployedBy: String
+  mode: String
+  resources: DataJobResources
+  schedule: DataJobSchedule
+  vdkVersion: String
+  status: DataJobDeploymentStatus
+}
+
+type DataJobExecution {
+    id: String
+    type: DataJobExecutionType
+    jobName: String
+    status: DataJobExecutionStatus
+    startTime: String
+    endTime: String
+    startedBy: String
+    message: String
+    opId: String
+    logsUrl: String
+    deployment: DataJobExecutionDeployment
+}
+
+type DataJobDeployment {
+    id: String
+    enabled: Boolean
+    contacts: DataJobContacts
+    jobVersion: String
+    jobPythonVersion: String
+    lastDeployedDate: String
+    lastDeployedBy: String
+    mode: String
+    resources: DataJobResources
+    schedule: DataJobSchedule
+    vdkVersion: String
+    executions(pageNumber: Int, pageSize: Int, filter: DataJobExecutionFilter, order: DataJobExecutionOrder): [DataJobExecution]
+    status: DataJobDeploymentStatus
+    lastExecutionStatus: DataJobExecutionStatus
+    lastExecutionTime: String
+    lastExecutionDuration: Int
+    successfulExecutions: Int
+    failedExecutions: Int
+}
+
+type DataJobConfig {
+    team: String
+    description: String
+    schedule: DataJobSchedule
+    contacts: DataJobContacts
+    generateKeytab: Boolean
+    sourceUrl: String
+    logsUrl: String
+}
+
+type DataJobSchedule {
+    scheduleCron: String
+    nextRunEpochSeconds: Int
+}
+
+enum DataJobDeploymentStatus {
+    NONE
+    SUCCESS
+    PLATFORM_ERROR
+    USER_ERROR
+}
+
+enum DataJobExecutionStatus {
+    SUBMITTED
+    RUNNING
+    SUCCEEDED
+    CANCELLED
+    SKIPPED
+    USER_ERROR
+    PLATFORM_ERROR
+}
+
+enum DataJobExecutionType {
+    MANUAL
+    SCHEDULED
+}

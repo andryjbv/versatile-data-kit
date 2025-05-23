@@ -1,0 +1,24 @@
+### 2. Dockerfile Implementation
+Ensure you examine the existing `Dockerfile` template and honor the instructions and formatting in the template. Create a single `Dockerfile` that adapts to the existing codebase:
+
+- Base image selection based on actual project requirements found in the codebase
+  - Consider the project's primary programming language
+  - Consider required system dependencies
+  - Consider security implications
+- Git installation and repository cloning to `/app` directory
+- Bash installation required for downstream file runs
+- Python3 installation is required as well as python-is-python3 alias for ease of use. Environment should allow me to use `python` as a command.
+- System package installation as specified in project documentation
+- Build tools setup 
+- Language-specific package managers
+
+The Dockerfile should:
+- Be simple and straightforward (single-stage build)
+- Clone the repository to `/app` inside the container
+- Update the installation of system dependencies in the `# System Dependencies` section
+
+You should not do the following:
+- Edit any code on or below the line `RUN LATEST_COMMIT=$(git rev-list -n 1 --before="2025-03-22" HEAD) && git reset --hard $LATEST_COMMIT`
+- Install any project-specific dependencies from requirements.txt or pyproject.toml
+- Update the entrypoint or command
+- Run any tests

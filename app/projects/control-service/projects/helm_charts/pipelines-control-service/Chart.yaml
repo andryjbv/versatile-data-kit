@@ -1,0 +1,36 @@
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: v2
+name: pipelines-control-service
+description: A Helm chart for Versatile Data Kit Control Service
+
+type: application
+
+# Official version is set in version.txt file - it will update both appVersion and verison.
+# See root CONTRIBUTING.md for full release process.
+version: 0.0.1-SNAPSHOT
+appVersion: 0.0.1-SNAPSHOT
+
+
+# TODO: check that required k8s capabilities are present
+# TODO: add test to verify installation works https://helm.sh/docs/helm/helm_test (or maybe readiness probe would be enough?)
+
+dependencies:
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+    - bitnami-common
+  version: 2.x.x
+- name: postgresql
+  version: "15.2.2"
+  repository: https://charts.bitnami.com/bitnami
+  condition: postgresql.enabled
+- name: cockroachdb
+  version: "12.0.3"
+  repository: "https://charts.cockroachdb.com/"
+  condition: cockroachdb.enabled
+- name: ingress-nginx
+  version: 4.10.0
+  repository: "https://kubernetes.github.io/ingress-nginx"
+  condition: nginx.enabled

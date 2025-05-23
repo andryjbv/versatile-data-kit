@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-notebook:
+  variables:
+    PLUGIN_NAME: vdk-notebook
+  extends: .build-plugin
+
+build-py37-vdk-notebook:
+  extends: .build-vdk-notebook
+  image: "python:3.7"
+
+build-py312-vdk-notebook:
+  extends: .build-vdk-notebook
+  image: "python:3.12"
+
+release-vdk-notebook:
+  variables:
+    PLUGIN_NAME: vdk-notebook
+  extends: .release-plugin

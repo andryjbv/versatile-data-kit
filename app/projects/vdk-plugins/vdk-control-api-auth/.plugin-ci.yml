@@ -1,0 +1,28 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-control-api-auth:
+  variables:
+    PLUGIN_NAME: vdk-control-api-auth
+  extends: .build-plugin
+
+build-py37-vdk-control-api-auth:
+  extends: .build-vdk-control-api-auth
+  image: "python:3.7"
+
+build-py312-vdk-control-api-auth:
+  extends: .build-vdk-control-api-auth
+  image: "python:3.12"
+
+build-vdk-control-api-auth-on-vdk-core-release:
+  variables:
+    PLUGIN_NAME: vdk-control-api-auth
+  extends: .build-plugin-on-vdk-core-release
+  image: "python:3.9"
+
+release-vdk-control-api-auth:
+  variables:
+    PLUGIN_NAME: vdk-control-api-auth
+  extends: .release-plugin

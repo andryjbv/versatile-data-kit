@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-properties-fs:
+  variables:
+    PLUGIN_NAME: vdk-properties-fs
+  extends: .build-plugin-dind
+
+build-py37-vdk-properties-fs:
+  extends: .build-vdk-properties-fs
+  image: "python:3.7"
+
+build-py312-vdk-properties-fs:
+  extends: .build-vdk-properties-fs
+  image: "python:3.12"
+
+release-vdk-properties-fs:
+  variables:
+    PLUGIN_NAME: vdk-properties-fs
+  extends: .release-plugin

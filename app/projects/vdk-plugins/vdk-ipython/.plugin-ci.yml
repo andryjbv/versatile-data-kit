@@ -1,0 +1,22 @@
+
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-ipython:
+  variables:
+    PLUGIN_NAME: vdk-ipython
+  extends: .build-plugin
+
+build-py37-vdk-ipython:
+  extends: .build-vdk-ipython
+  image: "python:3.7"
+
+build-py312-vdk-ipython:
+  extends: .build-vdk-ipython
+  image: "python:3.12"
+
+release-vdk-ipython:
+  variables:
+    PLUGIN_NAME: vdk-ipython
+  extends: .release-plugin

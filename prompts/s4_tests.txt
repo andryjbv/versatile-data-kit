@@ -1,0 +1,22 @@
+### 4. Run Script Implementation
+Implement the run script in `/workspace/run.sh` to configure and run tests. Ensure you examine the existing `run.sh` template and honor the instructions in the template.
+- Test execution setup:
+  - Configure test framework for detailed output (e.g., pytest -v)
+  - Enable individual test case status reporting
+  - Set up test discovery for quick feedback
+  - Include failure details and stack traces
+
+Test execution has two sections that must be populated; `run_all_tests` and `run_selected_tests`
+  - `run_all_tests` should run all tests in the repository (e.g., `pytest -v tests/`)
+  - `run_selected_tests` should run a list of tests provided as a comma delimited command line argument (e.g., `pytest "${test_files[@]}`)
+
+
+Example runs:
+- Run all tests -- `/run.sh`
+- Run subset of tests -- `/run.sh path_to_file/test1.py,path_to_file/test2.py`
+
+The run script should:
+- Respect any specific requirements found in the project's configuration
+- Account for custom test scripts discovered during analysis
+- Work with the existing codebase without requiring any modifications
+- Clear test output with individual case status

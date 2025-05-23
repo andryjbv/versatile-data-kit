@@ -1,0 +1,20 @@
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-audit:
+  variables:
+    PLUGIN_NAME: vdk-audit
+  extends: .build-plugin
+
+build-py38-vdk-audit:
+  extends: .build-vdk-audit
+  image: "python:3.8"
+
+build-py312-vdk-audit:
+  extends: .build-vdk-audit
+  image: "python:3.12"
+
+release-vdk-audit:
+  variables:
+    PLUGIN_NAME: vdk-audit
+  extends: .release-plugin

@@ -1,0 +1,13 @@
+### 5. Test Results Parser
+
+`docker build -t <image_name> .` and `docker run -v "$(pwd)":/workspace <image_name> /workspace/run.sh >stdout.txt 2>stderr.txt` to execute tests and check the outputs. Based on the output, implement the parsing logic in `/workspace/parsing.py` to:
+- Process the test execution output
+- Identify test names and their results
+- Test name should contain the file path to the test
+- Categorize results as PASSED, FAILED, SKIPPED, or ERROR
+- Generate a structured JSON output
+- Process detailed test execution output:
+  - Capture individual test case results
+  - Track error messages and stack traces
+Note: Only implement the parsing function and leave the rest of the file as is.
+Verify the parser implementation by running the container and check the generated `/workspace/test_results.json` file.

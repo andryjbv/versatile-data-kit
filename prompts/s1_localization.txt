@@ -1,0 +1,42 @@
+### 1. Environment Setup (Local Analysis)
+- IMPORTANT: Before implementing anything, thoroughly analyze the codebase:
+  - Read ALL README files and documentation carefully
+  - Study build configuration files to understand build requirements
+  - Examine test configuration files to understand test setup and requirements:
+    - Identify all available test suites and test files
+    - Check for test categories (unit, integration, end2end, etc.)
+    - Note test file naming patterns
+    - Look for test configuration options that enable selective test execution
+    - Find commands to run individual test files or test cases
+    - Check for test output verbosity settings
+  - Check for any custom scripts or tools
+  - Look for specific version requirements or constraints
+  - Review existing Docker configurations if any
+  - Analyze GitHub Actions workflows in `.github/workflows/`:
+    - Check what base images are used in CI/CD
+    - Review environment setup steps
+    - Note package installation commands
+    - Identify build and test commands
+    - Look for environment variables
+    - Study dependency caching strategies
+  - Check other CI/CD configurations for environment setup hints
+  - Pay special attention to:
+    - Non-standard configurations or custom build steps
+    - Environment-specific requirements
+    - Test framework customizations
+    - Special dependencies or system requirements
+    - Platform-specific code or requirements
+- Document key findings that will impact your Dockerfile implementation
+- Remember: Your role is to adapt the Dockerfile to the project, not modify the project to fit your Dockerfile
+- DO NOT make assumptions about:
+  - Build process
+  - Test execution
+  - Dependencies
+  - Environment requirements
+  - Framework configurations
+- DO NOT attempt to:
+  - Modify any source code
+  - Change build configurations
+  - Alter test frameworks
+  - Update dependencies
+  - Change any existing scripts

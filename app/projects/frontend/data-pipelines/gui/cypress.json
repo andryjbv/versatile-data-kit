@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://localhost.vmware.com:4200/",
+  "projectId": "bh68hj",
+  "fixturesFolder": "e2e/fixtures",
+  "integrationFolder": "e2e/integration",
+  "pluginsFile": "e2e/plugins/index.js",
+  "screenshotsFolder": "e2e/screenshots",
+  "videosFolder": "e2e/videos",
+  "supportFile": "e2e/support/index.js",
+  "reporter": "junit",
+  "taskTimeout": 120000,
+  "requestTimeout": 90000,
+  "responseTimeout": 120000,
+  "pageLoadTimeout": 90000,
+  "execTimeout": 90000,
+  "defaultCommandTimeout": 16000,
+  "viewportWidth": 1366,
+  "viewportHeight": 768,
+  "retries": 2,
+  "reporterOptions": {
+    "mochaFile": "e2e/reports/test-results.xml",
+    "toConsole": true
+  },
+  "env": {
+    "hars_folders": "e2e/hars",
+    "csp_url": "https://console-stg.cloud.vmware.com",
+    "data_jobs_url": "http://cicd-vdk-svc:8092",
+    "test_environment": "lib",
+    "grepTags": ""
+  }
+}

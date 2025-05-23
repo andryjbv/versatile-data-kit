@@ -1,0 +1,7 @@
+lombok.config
+build
+.gradle
+.idea
+out
+/logs
+/target

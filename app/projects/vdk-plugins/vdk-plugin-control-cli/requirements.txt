@@ -1,0 +1,7 @@
+pytest-httpserver
+requests
+vdk-control-cli
+vdk-core
+
+# test deps
+vdk-test-utils

@@ -1,0 +1,6 @@
+fastapi
+langchain
+openai
+pgvector
+sentence-transformers
+uvicorn[standard]

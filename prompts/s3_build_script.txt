@@ -1,0 +1,16 @@
+### 3. Build Script
+Implement the build script in `/workspace/build.sh` to configure and build the repo. Ensure you examine the existing `build.sh` template and honor the instructions in the template.
+
+- Project dependency installation
+- Environment variable configuration
+- Build process
+
+The build script should:
+- Respect any specific requirements found in the project's configuration
+- Account for custom build scripts discovered during analysis
+- Work with the existing codebase without requiring any modifications
+- Handle any special cases discovered during analysis
+
+The build script should not:
+- Run any tests
+

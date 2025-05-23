@@ -1,0 +1,14 @@
+
+--extra-index-url https://test.pypi.org/simple/
+
+click
+click-log
+impyla
+pytest
+pytest-cov
+requests
+retrying
+
+thrift_sasl
+trino
+vdk-control-cli

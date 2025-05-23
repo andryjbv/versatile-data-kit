@@ -1,0 +1,21 @@
+
+# Copyright 2023-2025 Broadcom
+# SPDX-License-Identifier: Apache-2.0
+
+.build-vdk-snowflake:
+  variables:
+    PLUGIN_NAME: vdk-snowflake
+  extends: .build-plugin
+
+build-py37-vdk-snowflake:
+  extends: .build-vdk-snowflake
+  image: "python:3.7"
+
+build-py312-vdk-snowflake:
+  extends: .build-vdk-snowflake
+  image: "python:3.12"
+
+release-vdk-snowflake:
+  variables:
+    PLUGIN_NAME: vdk-snowflake
+  extends: .release-plugin

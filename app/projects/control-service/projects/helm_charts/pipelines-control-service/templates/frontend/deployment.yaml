@@ -1,0 +1,61 @@
+{{- /*
+  Copyright 2023-2025 Broadcom
+  SPDX-License-Identifier: Apache-2.0
+ */}}
+
+{{- if .Values.operationsUi.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ui
+  labels:
+    app: {{ .Release.Name }}-ui
+    date: "{{ now | unixEpoch }}"
+spec:
+  replicas: {{ .Values.operationsUi.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-ui
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-ui
+        date: "{{ now | unixEpoch }}"
+    spec:
+      {{- if and (.Values.operationsUi.image.username) (.Values.operationsUi.image.password) }}
+      imagePullSecrets:
+        - name: {{ template "pipelines-control-service.fullname" . }}-operations-ui-repo-creds
+      {{- end }}
+      containers:
+        -  name: management-service-ui
+           image: {{ template "operations-ui.image" . }}
+           ports:
+             -  name: http
+                containerPort: 8091
+                protocol: TCP
+           livenessProbe:
+             httpGet:
+               path: /
+               port: http
+           readinessProbe:
+             httpGet:
+               path: /
+               port: http
+           resources:
+             requests:
+               memory: {{ .Values.operationsUi.resources.requests.memory }}
+               cpu: {{ .Values.operationsUi.resources.requests.cpu }}
+             limits:
+               memory: {{ .Values.operationsUi.resources.limits.memory }}
+               cpu: {{ .Values.operationsUi.resources.limits.cpu }}
+           volumeMounts:
+             - name: config-volume
+               mountPath: /usr/share/nginx/html/assets/data/appConfig.json
+               subPath: config.json
+      volumes:
+        - name: config-volume
+          configMap:
+            name: ui-config
+
+{{- end }}
