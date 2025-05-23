@@ -2,7 +2,7 @@
 # BASE IMAGE
 ###############################################
 # TODO: Choose appropriate base image
-# FROM <base-image>:<tag>
+FROM python:3.9-slim
 
 ###############################################
 # WORKING DIRECTORY
@@ -15,22 +15,29 @@ WORKDIR /app
 ###############################################
 # SYSTEM DEPENDENCIES
 ###############################################
-# TODO: Install required system dependencies
-# TODO: Setup basic python environment which is needed for final post-processing and scoring
-# RUN apt-get update && apt-get install -y git <other-required-packages>
+# Install required system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    bash \
+    python3 \
+    python3-pip \
+    python3-setuptools \
+    python-is-python3 \
+    openjdk-17-jdk \
+    && rm -rf /var/lib/apt/lists/*
 
 ###############################################
 # REPO SETUP
 ###############################################
-# TODO: Clone repository, follow the template below
-RUN git clone <repository-url> .
-# RUN git submodule update --init --recursive
+# Clone repository
+RUN git clone https://github.com/vmware/versatile-data-kit.git .
+RUN git submodule update --init --recursive
 
 # Freeze the repository to a reproducible state.
 # Use one of the two approaches below depending on the task version:
 
 # - If the task version is "latest" or there is no specified version, freeze to the latest commit before a given date:
-# RUN LATEST_COMMIT=$(git rev-list -n 1 --before="2025-03-28" HEAD) && git reset --hard $LATEST_COMMIT
+RUN LATEST_COMMIT=$(git rev-list -n 1 --before="" HEAD) && git reset --hard $LATEST_COMMIT
 
 # - If the task version is NOT "latest" (e.g., a specific commit hash), pin to a specific commit explicitly (use this only when needed):
 # RUN git checkout <commit-sha-or-tag>
