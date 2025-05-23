@@ -37,7 +37,7 @@ RUN git submodule update --init --recursive
 # Use one of the two approaches below depending on the task version:
 
 # - If the task version is "latest" or there is no specified version, freeze to the latest commit before a given date:
-RUN LATEST_COMMIT=$(git rev-list -n 1 --before="" HEAD) && git reset --hard $LATEST_COMMIT
+RUN LATEST_COMMIT=$(git rev-list -n 1 --before="2025-05-21" HEAD) && git reset --hard $LATEST_COMMIT
 
 # - If the task version is NOT "latest" (e.g., a specific commit hash), pin to a specific commit explicitly (use this only when needed):
 # RUN git checkout <commit-sha-or-tag>
